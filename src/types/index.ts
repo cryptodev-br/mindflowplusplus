@@ -19,10 +19,12 @@ export interface Todo {
   status: TodoStatus;
   isDaily: boolean;
   goalId?: string;
+  goalTitle?: string;
   userId: string;
   createdAt: Date;
   lastCompletedAt?: Date;
   dueDate?: Date;
+  completed?: boolean;
 }
 
 export interface UserProgress {

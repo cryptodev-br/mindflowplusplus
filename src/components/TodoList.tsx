@@ -20,6 +20,9 @@ interface TodoListProps {
 }
 
 export default function TodoList({ viewMode = 'all', currentGoalId, limit }: TodoListProps) {
+  // Garantir que o TypeScript entenda o tipo correto
+  const viewModeValue: 'all' | 'daily' | 'goals' = viewMode;
+  
   const [todos, setTodos] = useState<TodoDisplay[]>([]);
   const [newTodo, setNewTodo] = useState('');
   const [editingTodo, setEditingTodo] = useState<string | null>(null);
@@ -161,7 +164,7 @@ export default function TodoList({ viewMode = 'all', currentGoalId, limit }: Tod
 
     try {
       // Define o objetivo atual se estivermos na visualização por objetivo
-      const goalId = viewMode === 'goals' && currentGoalId ? currentGoalId : selectedGoal;
+      const goalId = viewModeValue === 'goals' && currentGoalId ? currentGoalId : selectedGoal;
       const goalTitle = goalId ? goals.find(g => g.id === goalId)?.title : null;
       
       const todoData = {
@@ -169,7 +172,7 @@ export default function TodoList({ viewMode = 'all', currentGoalId, limit }: Tod
         description: '',
         status: 'planejado' as const,
         completed: false,
-        isDaily: viewMode === 'daily' ? true : isDaily,
+        isDaily: viewModeValue === 'daily' ? true : isDaily,
         userId: user.uid,
         createdAt: new Date(),
         goalId: goalId || null,
@@ -306,7 +309,7 @@ export default function TodoList({ viewMode = 'all', currentGoalId, limit }: Tod
     });
     
     // Aplicar filtro por modo de visualização
-    switch (viewMode) {
+    switch (viewModeValue) {
       case 'daily':
         filtered = filtered.filter(todo => todo.isDaily);
         break;
@@ -316,7 +319,7 @@ export default function TodoList({ viewMode = 'all', currentGoalId, limit }: Tod
     }
     
     // Aplicar filtro por objetivo (apenas no modo 'all')
-    if (viewMode === 'all' && filterGoal) {
+    if (viewModeValue === 'all' && filterGoal) {
       filtered = filtered.filter(todo => todo.goalId === filterGoal);
     }
     
@@ -377,7 +380,7 @@ export default function TodoList({ viewMode = 'all', currentGoalId, limit }: Tod
   const regularTodos = filteredTodos.filter(todo => !todo.isDaily);
   
   // Agrupar tarefas por objetivo somente se estamos no modo de visualização 'all'
-  const todosByGoal = viewMode === 'all' 
+  const todosByGoal = viewModeValue === 'all' 
     ? regularTodos.reduce((acc, todo) => {
         if (todo.goalId) {
           if (!acc[todo.goalId]) {
@@ -511,7 +514,7 @@ export default function TodoList({ viewMode = 'all', currentGoalId, limit }: Tod
                   )}
                 </div>
                 <div className="flex items-center mt-1 gap-2">
-                  {todo.goalTitle && viewMode !== 'goals' && (
+                  {todo.goalTitle && viewModeValue !== 'goals' && (
                     <span className="text-xs text-[#666666] flex items-center">
                       <FaLeaf className="mr-1 text-[#6eb46e] text-xs" /> {todo.goalTitle}
                     </span>
@@ -618,7 +621,7 @@ export default function TodoList({ viewMode = 'all', currentGoalId, limit }: Tod
                 autoFocus
               />
               
-              {viewMode === 'all' && (
+              {viewModeValue === 'all' && (
                 <div className="flex flex-col gap-4">
                   <select
                     value={selectedGoal}
@@ -637,9 +640,9 @@ export default function TodoList({ viewMode = 'all', currentGoalId, limit }: Tod
                     <label className="flex items-center space-x-2 text-sm text-[#666666] bg-white px-4 py-2 rounded-lg border border-[#d4b397] flex-1">
                       <input
                         type="checkbox"
-                        checked={isDaily || viewMode === 'daily'}
+                        checked={isDaily || viewModeValue === 'daily'}
                         onChange={(e) => setIsDaily(e.target.checked)}
-                        disabled={viewMode === 'daily'}
+                        disabled={viewModeValue === 'daily'}
                         className="form-checkbox w-4 h-4"
                       />
                       <span>Tarefa Diária</span>
@@ -687,7 +690,7 @@ export default function TodoList({ viewMode = 'all', currentGoalId, limit }: Tod
       </div>
 
       {/* Filtros - apenas no modo 'all' */}
-      {viewMode === 'all' && (
+      {viewModeValue === 'all' && (
         <div className="section-container">
           <div className="section-header mb-2">
             <div className="section-title">
@@ -764,7 +767,7 @@ export default function TodoList({ viewMode = 'all', currentGoalId, limit }: Tod
       )}
 
       {/* Resumo de Progresso - apenas no modo 'all' */}
-      {viewMode === 'all' && (
+      {viewModeValue === 'all' && (
         <div className="section-container">
           <div className="section-header">
             <div className="section-title">
@@ -847,7 +850,7 @@ export default function TodoList({ viewMode = 'all', currentGoalId, limit }: Tod
       )}
 
       {/* Lista de Tarefas - adaptada conforme a visualização selecionada */}
-      {viewMode === 'daily' && (
+      {viewModeValue === 'daily' && (
         <div className="section-container">
           <div className="section-header">
             <div className="section-title">
@@ -868,7 +871,7 @@ export default function TodoList({ viewMode = 'all', currentGoalId, limit }: Tod
         </div>
       )}
 
-      {viewMode === 'goals' && currentGoalId && (
+      {viewModeValue === 'goals' && currentGoalId && (
         <div className="section-container">
           <div className="section-header">
             <div className="section-title">
@@ -889,7 +892,7 @@ export default function TodoList({ viewMode = 'all', currentGoalId, limit }: Tod
         </div>
       )}
 
-      {viewMode === 'all' && !filterGoal && (
+      {viewModeValue === 'all' && !filterGoal && (
         <>
           {/* Tarefas Diárias */}
           {dailyTodos.length > 0 && (
@@ -948,7 +951,7 @@ export default function TodoList({ viewMode = 'all', currentGoalId, limit }: Tod
         </>
       )}
 
-      {viewMode === 'all' && filterGoal && (
+      {viewModeValue === 'all' && filterGoal && (
         <div className="section-container">
           <div className="section-header">
             <div className="section-title">

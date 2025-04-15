@@ -21,7 +21,7 @@ interface TodoListProps {
 
 export default function TodoList({ viewMode = 'all', currentGoalId, limit }: TodoListProps) {
   // Garantir que o TypeScript entenda o tipo correto
-  const viewModeValue: 'all' | 'daily' | 'goals' = viewMode;
+  const viewModeValue = viewMode as 'all' | 'daily' | 'goals';
   
   const [todos, setTodos] = useState<TodoDisplay[]>([]);
   const [newTodo, setNewTodo] = useState('');

@@ -49,7 +49,9 @@ export default function UserProgress() {
           const data = doc.data() as UserProgressType;
           setProgress({
             ...data,
-            lastLoginDate: data.lastLoginDate.toDate(),
+            lastLoginDate: data.lastLoginDate && typeof data.lastLoginDate.toDate === 'function' 
+              ? data.lastLoginDate.toDate() 
+              : data.lastLoginDate,
           });
         }
         setLoading(false);

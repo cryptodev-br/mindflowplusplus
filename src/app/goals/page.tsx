@@ -226,7 +226,7 @@ export default function GoalsPage() {
           <div className="flex items-center justify-between text-sm mt-4 border-t border-[#e6d1bf] pt-4">
             <div className="flex items-center space-x-4">
               <span className="flex items-center text-[#6c443c]">
-                <FaTasks className="mr-1 text-[#9c6550]" /> {goal.tasksCount || 0}
+                <FaTasks className="mr-1 text-[#9c6550]" /> {goal.tasksCount ?? 0}
               </span>
               <span className="flex items-center text-[#6c443c]">
                 <FaCalendarAlt className="mr-1 text-[#9c6550]" /> 
@@ -264,16 +264,16 @@ export default function GoalsPage() {
             </div>
           </div>
           
-          {goal.tasksCount > 0 && (
+          {(goal.tasksCount ?? 0) > 0 && (
             <div className="mt-4">
               <div className="flex justify-between items-center text-xs text-[#6c443c]">
                 <span>Progresso:</span>
-                <span>{goal.completedTasksCount}/{goal.tasksCount} tarefas ({Math.round((goal.completedTasksCount! / goal.tasksCount!) * 100)}%)</span>
+                <span>{goal.completedTasksCount ?? 0}/{goal.tasksCount ?? 0} tarefas ({Math.round(((goal.completedTasksCount ?? 0) / (goal.tasksCount ?? 1)) * 100)}%)</span>
               </div>
               <div className="progress-bar h-2 mt-1">
                 <div 
                   className="progress-value"
-                  style={{ width: `${goal.tasksCount > 0 ? (goal.completedTasksCount! / goal.tasksCount!) * 100 : 0}%` }}
+                  style={{ width: `${(goal.tasksCount ?? 0) > 0 ? ((goal.completedTasksCount ?? 0) / (goal.tasksCount ?? 1)) * 100 : 0}%` }}
                 ></div>
               </div>
             </div>

@@ -116,7 +116,7 @@ export default function CalendarPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-md">
               <Calendar
-                onChange={setSelectedDate}
+                onChange={(value) => value instanceof Date && setSelectedDate(value)}
                 value={selectedDate}
                 className="w-full"
                 tileContent={({ date }) => {

@@ -1,0 +1,220 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Paleta de cores de madeira e plantas */
+  --wood-lightest: #faf6f2;
+  --wood-light: #f2e8df;
+  --wood-medium: #e6d1bf;
+  --wood-dark: #d4b397;
+  --wood-darker: #c19474;
+  --wood-brown: #b17b5d;
+  --wood-mahogany: #9c6550;
+  --wood-oak: #825244;
+  --wood-walnut: #6c443c;
+  --wood-dark-walnut: #5b3a35;
+  
+  --plant-lightest: #f4f9f4;
+  --plant-light: #e4f3e4;
+  --plant-medium: #c8e5c8;
+  --plant-dark: #9ed09e;
+  --plant-darker: #6eb46e;
+  --plant-green: #4d944d;
+  --plant-forest: #3d783d;
+  --plant-deep: #346134;
+  
+  --text-dark: #313131;
+  --text-medium: #515151;
+  --text-light: #666666;
+}
+
+body {
+  color: var(--text-dark);
+  background-color: var(--wood-light);
+  background-image: linear-gradient(to bottom right, var(--wood-light), var(--wood-medium));
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--wood-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--wood-mahogany);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--wood-oak);
+}
+
+/* Animações suaves */
+* {
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--wood-dark-walnut);
+  }
+  
+  p {
+    color: var(--wood-walnut);
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-full transition-colors text-sm font-medium;
+  }
+  
+  .btn-primary {
+    @apply bg-[#9c6550] hover:bg-[#825244] text-white;
+  }
+  
+  .btn-success {
+    @apply bg-[#4d944d] hover:bg-[#3d783d] text-white;
+  }
+  
+  .btn-outline {
+    @apply border border-[#9c6550] text-[#9c6550] hover:bg-[#f2e8df];
+  }
+  
+  .card {
+    @apply bg-white rounded-xl border border-[#d4b397] shadow-sm;
+    @apply hover:shadow-md transition-shadow duration-200;
+  }
+  
+  .input {
+    @apply bg-white border border-[#d4b397] rounded-lg px-4 py-2 w-full;
+    @apply focus:outline-none focus:ring-2 focus:ring-[#4d944d] focus:border-transparent;
+    @apply placeholder-[#a4a4a4];
+  }
+  
+  .checkbox {
+    @apply rounded border-[#d4b397] text-[#4d944d];
+    @apply focus:ring-2 focus:ring-[#4d944d] focus:ring-opacity-50;
+  }
+  
+  .progress-bar {
+    @apply w-full bg-[#e6d1bf] rounded-full overflow-hidden;
+  }
+  
+  .progress-value {
+    @apply bg-[#6eb46e] h-full rounded-full transition-all duration-500;
+  }
+}
+
+/* Efeitos de hover em cards */
+.card-hover {
+  @apply bg-[#f7eee3] transition-all hover:bg-[#f2e8df];
+}
+
+/* Containers de seção */
+.section-container {
+  @apply bg-white p-4 rounded-xl shadow-sm border border-[#d4b397];
+}
+
+/* Cabeçalhos de seção */
+.section-header {
+  @apply flex items-center justify-between mb-4;
+}
+
+.section-title {
+  @apply flex items-center;
+}
+
+.section-title-icon {
+  @apply text-[#b17b5d] mr-2;
+}
+
+.section-title-text {
+  @apply text-lg font-semibold text-[#5b3a35];
+}
+
+/* Links de navegação */
+.section-link {
+  @apply text-sm font-medium text-[#4d944d] hover:text-[#3d783d] transition-colors flex items-center;
+}
+
+/* Status de tarefas */
+.task-status-dot {
+  @apply w-3 h-3 rounded-full mr-3;
+}
+
+.task-status-dot-completed {
+  @apply bg-[#4d944d];
+}
+
+.task-status-dot-pending {
+  @apply bg-[#c19474];
+}
+
+.task-title {
+  @apply text-sm font-medium;
+}
+
+.task-title-completed {
+  @apply text-[#666666] line-through;
+}
+
+.task-title-pending {
+  @apply text-[#5b3a35];
+}
+
+/* Dashboard Components */
+.stats-card {
+  @apply bg-white p-4 rounded-xl shadow-sm border border-[#d4b397] flex items-center;
+}
+
+.stats-icon-container {
+  @apply p-3 rounded-full mr-4 flex items-center justify-center;
+}
+
+/* Custom Form Elements */
+.form-input {
+  @apply w-full p-2 rounded-lg border border-[#d4b397] focus:border-[#9c6550] focus:outline-none bg-[#f7eee3];
+}
+
+.form-select {
+  @apply w-full p-2 rounded-lg border border-[#d4b397] focus:border-[#9c6550] focus:outline-none bg-[#f7eee3];
+}
+
+.form-checkbox {
+  @apply rounded border-[#d4b397] text-[#9c6550] focus:ring-[#9c6550] bg-[#f7eee3];
+}
+
+/* Goal Box Component */
+.goal-box {
+  @apply bg-white p-4 rounded-xl shadow-sm border border-[#d4b397] transition-all hover:border-[#9c6550];
+}
+
+.goal-box-header {
+  @apply flex items-center justify-between mb-3;
+}
+
+.goal-title {
+  @apply text-lg font-semibold text-[#5b3a35];
+}
+
+/* Task Item Component */
+.task-item {
+  @apply p-3 bg-[#f7eee3] rounded-lg flex items-center justify-between transition-all hover:bg-[#f2e8df] mb-2;
+}
+
+.task-checkbox {
+  @apply w-5 h-5 rounded border-[#d4b397] text-[#4d944d] focus:ring-[#4d944d];
+}
+
+.task-actions {
+  @apply flex space-x-2;
+}
+
+.task-action-btn {
+  @apply p-1.5 rounded-full text-[#6c443c] hover:bg-[#e6d1bf] transition-colors;
+} 

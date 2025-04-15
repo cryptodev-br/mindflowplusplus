@@ -8,6 +8,8 @@ export interface Goal {
   progress: number;
   userId: string;
   createdAt: Date;
+  completed?: boolean;
+  status?: 'in_progress' | 'completed';
 }
 
 export interface Todo {

@@ -6,9 +6,9 @@ import { db } from '@/utils/firebase';
 import { collection, query, where, orderBy, addDoc, updateDoc, deleteDoc, doc, getDocs } from 'firebase/firestore';
 import { useAuth } from '@/contexts/AuthContext';
 import { FaTrash, FaEdit, FaCheck, FaTimes, FaStar, FaArrowRight, FaArrowLeft, FaPlus, FaFlag, FaChartLine } from 'react-icons/fa';
-import type { Goal as GoalType } from '@/types';
+import type { Goal } from '@/types';
 
-interface GoalWithId extends GoalType {
+interface GoalWithId extends Goal {
   id: string;
 }
 
@@ -80,7 +80,7 @@ export default function Goals({ onGoalSelect, selectedGoalId, showControls = tru
       const goalData = {
         title: newGoal,
         description: '',
-        completed: false,
+        status: 'in_progress' as const,
         progress: 0,
         userId: user.uid,
         createdAt: new Date()
@@ -101,8 +101,9 @@ export default function Goals({ onGoalSelect, selectedGoalId, showControls = tru
 
     try {
       const goalRef = doc(db, 'goals', id);
+      const newStatus = goal.status === 'completed' ? 'in_progress' : 'completed';
       await updateDoc(goalRef, {
-        completed: !goal.completed
+        status: newStatus
       });
       fetchGoals();
     } catch (error) {
@@ -222,7 +223,7 @@ export default function Goals({ onGoalSelect, selectedGoalId, showControls = tru
             <h2 className="section-title-text">Meus Objetivos</h2>
           </div>
           <div>
-            <span className="text-[#4d944d] font-bold">{goals.filter(g => g.completed).length}/{goals.length}</span>
+            <span className="text-[#4d944d] font-bold">{goals.filter(g => g.status === 'completed').length}/{goals.length}</span>
           </div>
         </div>
 
@@ -291,12 +292,12 @@ export default function Goals({ onGoalSelect, selectedGoalId, showControls = tru
                         <div className="relative">
                           <input
                             type="checkbox"
-                            checked={goal.completed}
+                            checked={goal.status === 'completed'}
                             onChange={(e) => { e.stopPropagation(); toggleGoal(goal.id); }}
                             className="checkbox w-5 h-5 cursor-pointer"
                             onClick={(e) => e.stopPropagation()}
                           />
-                          {goal.completed && (
+                          {goal.status === 'completed' && (
                             <motion.div
                               initial={{ scale: 0 }}
                               animate={{ scale: 1 }}
@@ -306,7 +307,7 @@ export default function Goals({ onGoalSelect, selectedGoalId, showControls = tru
                             </motion.div>
                           )}
                         </div>
-                        <span className={`${goal.completed ? 'task-title-completed' : 'task-title-pending'} task-title`}>
+                        <span className={`${goal.status === 'completed' ? 'task-title-completed' : 'task-title-pending'} task-title`}>
                           {goal.title}
                         </span>
                       </div>

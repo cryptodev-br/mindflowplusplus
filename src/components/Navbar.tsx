@@ -6,7 +6,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { FaHome, FaTasks, FaBullseye, FaChartLine, FaSignOutAlt, FaUser } from 'react-icons/fa';
 
 export default function Navbar() {
-  const { user, signOut } = useAuth();
+  const { user, logout } = useAuth();
   const pathname = usePathname();
 
   const isActive = (path: string) => pathname === path;
@@ -60,7 +60,7 @@ export default function Navbar() {
                 <span className="text-white">{user.email}</span>
               </div>
               <button
-                onClick={signOut}
+                onClick={logout}
                 className="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-[#5b3a35] transition-colors"
               >
                 <FaSignOutAlt />

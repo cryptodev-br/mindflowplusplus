@@ -640,7 +640,7 @@ export default function TodoList({ viewMode = 'all', currentGoalId, limit }: Tod
                     <label className="flex items-center space-x-2 text-sm text-[#666666] bg-white px-4 py-2 rounded-lg border border-[#d4b397] flex-1">
                       <input
                         type="checkbox"
-                        checked={isDaily || viewModeValue === 'daily'}
+                        checked={isDaily}
                         onChange={(e) => setIsDaily(e.target.checked)}
                         disabled={viewModeValue === 'daily'}
                         className="form-checkbox w-4 h-4"

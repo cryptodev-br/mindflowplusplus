@@ -642,7 +642,6 @@ export default function TodoList({ viewMode = 'all', currentGoalId, limit }: Tod
                         type="checkbox"
                         checked={isDaily}
                         onChange={(e) => setIsDaily(e.target.checked)}
-                        disabled={viewModeValue === 'daily'}
                         className="form-checkbox w-4 h-4"
                       />
                       <span>Tarefa Diária</span>
